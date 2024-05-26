@@ -11,8 +11,7 @@ homepage = "https://github.com/nnsee/payload-dumper"
 python = "^3.10"
 protobuf = "^3.19.1"
 bsdiff4 = "^1.2.1"
-enlighten = "^1.10.2"
-gobject
+gobject = "^3"
 
 [tool.poetry.dev-dependencies]
 
