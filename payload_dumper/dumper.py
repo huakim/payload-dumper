@@ -33,10 +33,11 @@ def verify_contiguous(exts):
 
     return True
 
-def data_for_op(op,out_file,old_file):
+def data_for_op(args, op,out_file,old_file):
+    data_offset = args.data_offset
+    block_size = args.block_size
     args.payloadfile.seek(data_offset + op.data_offset)
     data = args.payloadfile.read(op.data_length)
-
     # assert hashlib.sha256(data).digest() == op.data_sha256_hash, 'operation data hash mismatch'
 
     if op.type == op.REPLACE_XZ:
@@ -93,7 +94,7 @@ def data_for_op(op,out_file,old_file):
 
     return data
 
-def dump_part(part):
+def dump_part(args, part):
     sys.stdout.write("Processing %s partition" % part.partition_name)
     sys.stdout.flush()
 
@@ -106,7 +107,7 @@ def dump_part(part):
         old_file = None
 
     for op in part.operations:
-        data = data_for_op(op,out_file,old_file)
+        data = data_for_op(args, op,out_file,old_file)
         sys.stdout.write(".")
         sys.stdout.flush()
 
@@ -147,21 +148,21 @@ def main():
     manifest = args.payloadfile.read(manifest_size)
     metadata_signature = args.payloadfile.read(metadata_signature_size)
 
-    data_offset = args.payloadfile.tell()
+    data_offset = args.data_offset = args.payloadfile.tell()
 
     dam = um.DeltaArchiveManifest()
     dam.ParseFromString(manifest)
-    block_size = dam.block_size
+    block_size = args.block_size = dam.block_size
 
     if args.images == "":
         for part in dam.partitions:
-            dump_part(part)
+            dump_part(args, part)
     else:
         images = args.images.split(",")
         for image in images:
             partition = [part for part in dam.partitions if part.partition_name == image]
             if partition:
-                dump_part(partition[0])
+                dump_part(args, partition[0])
             else:
                 sys.stderr.write("Partition %s not found in payload!\n" % image)
 

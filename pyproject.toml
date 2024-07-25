@@ -1,23 +1,26 @@
-[tool.poetry]
-name = "payload_dumper"
-version = "0.2.1"
-description = "Dump partitions from Android's payload.bin"
-authors = ["Rasmus Moorats <xx@nns.ee>"]
-readme = "README.md"
-repository = "https://github.com/nnsee/payload-dumper"
-homepage = "https://github.com/nnsee/payload-dumper"
-
-[tool.poetry.dependencies]
-python = "^3.10"
-protobuf = "^3.19.1"
-bsdiff4 = "^1.2.1"
-pygobject = "^3"
-
-[tool.poetry.dev-dependencies]
-
-[tool.poetry.scripts]
-payload_dumper = "payload_dumper:dumper.main"
-
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "payload_dumper"
+authors = [{name = "huakim", email = "fijik19@gmail.com"}]
+license = {text = "Apache 2.0"}
+description = "File transport adapter for Requests"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+urls = {Homepage = "https://github.com/huakim/payload-dumper"}
+dependencies = ["requests>=1.0.0", "protobuf>=3.19.1", "bsdiff4>=1.2.1", "enlighten>=1.10.2"]
+version = "0.2.1"
+
+[tool.distutils.bdist_wheel]
+universal = 1
+
+[tool.setuptools]
+py-modules = ["payload_dumper"]
+include-package-data = false
+
+[project.scripts]
+executive = "payload_dumper.dumper:main"
