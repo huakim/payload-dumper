@@ -12,7 +12,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
 ]
 urls = {Homepage = "https://github.com/huakim/payload-dumper"}
-dependencies = ["requests>=1.0.0", "protobuf>=3.19.1", "bsdiff4>=1.2.1", "enlighten>=1.10.2"]
+dependencies = ["requests>=1.0.0", "protobuf>=3.19.1", "bsdiff4>=1.2.1"]
 version = "0.2.1"
 
 [tool.distutils.bdist_wheel]
