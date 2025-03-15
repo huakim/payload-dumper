@@ -23,4 +23,4 @@ py-modules = ["payload_dumper"]
 include-package-data = false
 
 [project.scripts]
-executive = "payload_dumper.dumper:main"
+payload_dumper = "payload_dumper.dumper:main"
